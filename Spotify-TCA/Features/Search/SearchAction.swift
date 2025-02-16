@@ -1,3 +1,11 @@
+//
+//  SearchAction.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
+
+
 enum SearchAction: Equatable {
     // View Actions
     case onAppear

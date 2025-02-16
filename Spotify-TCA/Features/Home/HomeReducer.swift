@@ -1,61 +1,69 @@
-import ComposableArchitecture
-import Foundation
+//
+//  HomeReducer.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
 
-struct HomeReducer: Reducer {
-    struct Environment {
-        let mainQueue: AnySchedulerOf<DispatchQueue>
-        let musicClient: MusicClientProtocol
+import Foundation
+import ComposableArchitecture
+
+struct Home: Reducer {
+    struct State: Equatable {
+        var recentlyPlayed: [Track] = []
+        var recommendations: [Track] = []
+        var isLoading: Bool = false
     }
     
-    var body: some Reducer<HomeState, HomeAction> {
+    enum Action {
+        case onAppear
+        case loadRecentlyPlayed
+        case loadRecommendations
+        case recentlyPlayedResponse(TaskResult<[Track]>)
+        case recommendationsResponse(TaskResult<[Track]>)
+        case selectTrack(Track)
+    }
+    
+    @Dependency(\MockAPIClient.apiClient) var apiClient
+    
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .send(._fetchHomeData)
-                
-            case .onRefresh:
-                state.isLoading = true
                 return .merge(
-                    .send(._fetchRecentlyPlayed),
-                    .send(._fetchFeaturedPlaylists),
-                    .send(._fetchRecommendations)
+                    Effect.send(.loadRecentlyPlayed),
+                    Effect.send(.loadRecommendations)
                 )
                 
-            case ._fetchHomeData:
+            case .loadRecentlyPlayed:
                 state.isLoading = true
-                return .run { send in
-                    await send(.homeDataResponse(
-                        TaskResult { try await environment.musicClient.fetchHomeData() }
-                    ))
-                }
+                return apiClient.fetchRecentlyPlayed()
+                    .map(Action.recentlyPlayedResponse)
                 
-            case .homeDataResponse(.success(let data)):
+            case .loadRecommendations:
+                state.isLoading = true
+                return apiClient.fetchRecommendations()
+                    .map(Action.recommendationsResponse)
+                
+            case let .recentlyPlayedResponse(.success(tracks)):
+                state.recentlyPlayed = tracks
                 state.isLoading = false
-                state.data = data
                 return .none
                 
-            case .homeDataResponse(.failure(let error)):
+            case let .recommendationsResponse(.success(tracks)):
+                state.recommendations = tracks
                 state.isLoading = false
-                state.error = error.localizedDescription
-                state.showErrorAlert = true
                 return .none
                 
-            case .trackSelected(let track):
-                state.selectedTrack = track
-                return .send(.delegate(.playTrack(track)))
-                
-            case .playlistSelected(let playlist):
-                state.selectedPlaylist = playlist
-                return .send(.delegate(.openPlaylist(playlist)))
-                
-            case .dismissErrorAlert:
-                state.showErrorAlert = false
-                state.error = nil
+            case .recentlyPlayedResponse(.failure):
+                state.isLoading = false
                 return .none
                 
-            // Handle other cases...
+            case .recommendationsResponse(.failure):
+                state.isLoading = false
+                return .none
                 
-            default:
+            case .selectTrack:
                 return .none
             }
         }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FA8EBFBE2D61E42F0028EDBD /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = FA8EBFBD2D61E42F0028EDBD /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FA8EBFAB2D61E38D0028EDBD /* Spotify-TCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spotify-TCA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8EBFBE2D61E42F0028EDBD /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "Spotify-TCA";
 			packageProductDependencies = (
+				FA8EBFBD2D61E42F0028EDBD /* ComposableArchitecture */,
 			);
 			productName = "Spotify-TCA";
 			productReference = FA8EBFAB2D61E38D0028EDBD /* Spotify-TCA.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = FA8EBFA22D61E38D0028EDBD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FA8EBFBC2D61E42F0028EDBD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FA8EBFAC2D61E38D0028EDBD /* Products */;
 			projectDirPath = "";
@@ -322,6 +331,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA8EBFBC2D61E42F0028EDBD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA8EBFBD2D61E42F0028EDBD /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA8EBFBC2D61E42F0028EDBD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FA8EBFA32D61E38D0028EDBD /* Project object */;
 }

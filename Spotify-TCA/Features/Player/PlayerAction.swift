@@ -1,3 +1,11 @@
+//
+//  PlayerAction.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
+
+
 enum PlayerAction: Equatable {
     // View Actions
     case playPauseButtonTapped

@@ -1,3 +1,11 @@
+//
+//  RootView.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
+
+
 import SwiftUI
 import ComposableArchitecture
 
@@ -23,40 +31,34 @@ struct RootView: View {
                     }
                     .tag(Tab.home)
                     
-                    SearchView(
-                        store: store.scope(
-                            state: \.search,
-                            action: AppAction.search
-                        )
-                    )
-                    .tabItem {
-                        Image(systemName: "magnifyingglass")
-                        Text("Search")
-                    }
-                    .tag(Tab.search)
+                    // TODO: Implement SearchView
+                    Text("Search")
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                        .tag(Tab.search)
                     
-                    LibraryView(
-                        store: store.scope(
-                            state: \.library,
-                            action: AppAction.library
-                        )
-                    )
-                    .tabItem {
-                        Image(systemName: "books.vertical")
-                        Text("Library")
-                    }
-                    .tag(Tab.library)
+                    // TODO: Implement LibraryView
+                    Text("Library")
+                        .tabItem {
+                            Image(systemName: "music.note.list")
+                            Text("Library")
+                        }
+                        .tag(Tab.library)
+                    
+                    // TODO: Implement ProfileView
+                    Text("Profile")
+                        .tabItem {
+                            Image(systemName: "person")
+                            Text("Profile")
+                        }
+                        .tag(Tab.profile)
                 }
                 
                 // Mini Player overlay at bottom
                 VStack {
                     Spacer()
-                    PlayerView(
-                        store: store.scope(
-                            state: \.player,
-                            action: AppAction.player
-                        )
-                    )
                 }
             }
         }

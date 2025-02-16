@@ -1,3 +1,11 @@
+//
+//  MockData.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
+
+
 import Foundation
 
 enum MockData {
@@ -17,4 +25,42 @@ enum MockData {
         Artist(id: "1", name: "Ed Sheeran", imageUrl: "artist1", followers: 84500000),
         Artist(id: "2", name: "The Weeknd", imageUrl: "artist2", followers: 75300000),
     ]
+}
+
+import ComposableArchitecture
+
+struct MockAPIClient {
+    var fetchRecentlyPlayed: () -> Effect<[Track], Error>
+    var fetchRecommendations: () -> Effect<[Track], Error>
+    var searchTracks: (String) -> Effect<[Track], Error>
+    var fetchLibrary: () -> Effect<[Album], Error>
+}
+
+extension MockAPIClient {
+    static let live = Self(
+        fetchRecentlyPlayed: {
+            Effect.task {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                return MockData.tracks
+            }
+        },
+        fetchRecommendations: {
+            Effect.task {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                return MockData.tracks.shuffled()
+            }
+        },
+        searchTracks: { query in
+            Effect.task {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                return MockData.tracks.filter { $0.title.lowercased().contains(query.lowercased()) }
+            }
+        },
+        fetchLibrary: {
+            Effect.task {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                return MockData.albums
+            }
+        }
+    )
 }

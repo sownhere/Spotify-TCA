@@ -11,13 +11,13 @@ import ComposableArchitecture
 @main
 struct SpotifyApp: App {
     let store = Store(
-        initialState: AppState(),
+        initialState: AppReducer.State(),
         reducer: AppReducer()
-        )
+    )
     
     var body: some Scene {
         WindowGroup {
-            RootView(store: store)
+            SpotifyAppView(store: store)
         }
     }
 }

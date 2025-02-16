@@ -1,3 +1,13 @@
+//
+//  RecommendationsSection.swift
+//  Spotify-TCA
+//
+//  Created by SownFrenky on 2/16/25.
+//
+
+import SwiftUI
+
+
 struct RecommendationsSection: View {
     let tracks: [Track]
     let onTrackSelected: (Track) -> Void

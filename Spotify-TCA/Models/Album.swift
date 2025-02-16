@@ -5,6 +5,7 @@
 //  Created by SownFrenky on 2/16/25.
 //
 
+import Foundation
 
 struct Album: Identifiable, Equatable {
     let id: String

@@ -17,9 +17,10 @@ struct RecentlyPlayedSection: View {
             Text("Recently Played")
                 .font(.title2)
                 .fontWeight(.bold)
+                .padding(.horizontal)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 12) {
+                LazyHStack(spacing: 16) {
                     ForEach(tracks) { track in
                         TrackCard(track: track)
                             .onTapGesture {
@@ -27,7 +28,34 @@ struct RecentlyPlayedSection: View {
                             }
                     }
                 }
+                .padding(.horizontal)
             }
         }
     }
 }
+
+struct TrackCard: View {
+    let track: Track
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Image(systemName: "music.note")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150, height: 150)
+                .cornerRadius(8)
+            
+            Text(track.title)
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            Text(track.artist)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .frame(width: 150)
+    }
+}
+
+
+
